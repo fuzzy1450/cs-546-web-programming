@@ -49,15 +49,40 @@ export const questionTwo = (index, multiplier) => {
 	return retObj
 };
 
+
 export const questionThree = (str) => {
-  // Implement question 3 here
-  return; //return result
+	let validCharCode = (i) => {
+		if(i == 32) { // char code for space (' ')
+			return true
+		} else if(i>=65 && i<=90) { // 'A' - 'Z'
+			return true;
+		} else if (i>=97 && i<=122) { // 'a' - 'z'
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	let newStr = ""
+	
+	for(i in str){ // sanitize the input
+		if( validCharCode(str.charCodeAt(i)) ){
+			newStr += str[i]
+		}
+	}
+	
+	sentenceArray = newStr.split(' ');
+	
+	return sentenceArray.length;
+	
 };
 
 export const questionFour = (arr) => {
   // Implement question 4 here
   return; //return result
 };
+
+
 
 //DO NOT FORGET TO UPDATE THE INFORMATION BELOW OR IT WILL BE -2 POINTS PER FIELD THAT IS MISSING OR NOT CHANGED.
 export const studentInfo = {
