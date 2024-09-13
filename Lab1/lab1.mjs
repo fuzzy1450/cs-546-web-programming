@@ -81,8 +81,8 @@ export const questionFour = (arr) => {
 	let n = arr.length
 	let sum = 0
 	
-	for(i in aar){
-		let x = aar[i]
+	for(i in arr){
+		let x = arr[i]
 		sum+= (x*x*x)
 	}
 	
@@ -93,19 +93,20 @@ export const questionFour = (arr) => {
 	if(remain == 0){
 		return sum/n
 	} else if(remain >= n/2){ // the eq part of the gr_eq makes our logic preferntially round up
-	
+		sum += (n-remain)
+		return sum/n
+		
+	} else { // otherwise, we round down
+		sum -= remain
+		return sum/n
 	}
-	
-
-  // Implement question 4 here
-  return; //return result
 };
 
 
 
 //DO NOT FORGET TO UPDATE THE INFORMATION BELOW OR IT WILL BE -2 POINTS PER FIELD THAT IS MISSING OR NOT CHANGED.
 export const studentInfo = {
-  firstName: 'YOUR FIRST NAME',
-  lastName: 'YOUR LAST NAME',
-  studentId: 'YOUR STUDENT ID'
+  firstName: 'Evan',
+  lastName: 'Kupsch',
+  studentId: '10428138'
 };
