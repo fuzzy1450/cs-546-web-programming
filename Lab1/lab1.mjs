@@ -13,7 +13,7 @@ export const questionOne = (arr) => {
 	
 	let retArr = [0,0,false]
 	
-	for(i in arr){
+	for(let i in arr){
 		let x = arr[i]
 		if(isComposite(x)){
 			retArr[1]+=x
@@ -43,8 +43,8 @@ export const questionTwo = (index, multiplier) => {
 	}
 	
 	
-	fibIndex = fibonacci(index)
-	retObj = {}
+	let fibIndex = fibonacci(index)
+	let retObj = {}
 	retObj[fibIndex] = fibIndex * multiplier
 	return retObj
 };
@@ -65,15 +65,19 @@ export const questionThree = (str) => {
 	
 	let newStr = ""
 	
-	for(i in str){ // sanitize the input
+	for(let i in str){ // sanitize the input
 		if( validCharCode(str.charCodeAt(i)) ){
 			newStr += str[i]
 		}
 	}
 	
-	sentenceArray = newStr.split(' ');
+	let sentenceArray = newStr.split(' ');
+	let sum = 0;
+	for(let i in sentenceArray){
+		if(sentenceArray[i] != ''){sum++;}
+	}
 	
-	return sentenceArray.length;
+	return sum
 	
 };
 
@@ -81,7 +85,7 @@ export const questionFour = (arr) => {
 	let n = arr.length
 	let sum = 0
 	
-	for(i in arr){
+	for(let i in arr){
 		let x = arr[i]
 		sum+= (x*x*x)
 	}
