@@ -78,6 +78,25 @@ export const questionThree = (str) => {
 };
 
 export const questionFour = (arr) => {
+	let n = arr.length
+	let sum = 0
+	
+	for(i in aar){
+		let x = aar[i]
+		sum+= (x*x*x)
+	}
+	
+	// we are NOT using the math library
+	// we ARE reinventing the wheel
+	// we will preferentially round up if the true mean has 2 n
+	let remain = sum%n
+	if(remain == 0){
+		return sum/n
+	} else if(remain >= n/2){ // the eq part of the gr_eq makes our logic preferntially round up
+	
+	}
+	
+
   // Implement question 4 here
   return; //return result
 };
