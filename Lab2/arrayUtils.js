@@ -3,7 +3,7 @@
       DO NOT CHANGE THE FUNCTION NAMES
 */
 
-// ----------Data Sanitization Functions----------
+// ----------Type Enforcement Functions----------
 let assertNum = (v, varName) => {
   if (typeof v !== 'number') throw `${varName || v} must be a number. Recieved type ${typeof v}`;
   if (isNaN(v)) throw `${varName || v} is NaN`;
@@ -40,15 +40,20 @@ let assertStr = (v, varName) => {
   if (v==0) throw `${varName || v} must not be empty.` // this catches many things. most of them cant be used as keys for dicts.
 }
 
-let assertKeyPair = (v, varName) =>{
+let assertArray = (v, varName) => {
   if (!Array.isArray(v)) throw `(${varName || v}) must be an array.`;
+}
+
+
+let assertKeyPair = (v, varName) =>{
+  assertArray(v, varName)
   if (v.length != 2) throw `(${varName || v}) must have two elements`;
   assertEither(v[0], `(${varName || v})[0]`, assertStr, assertNum, "assertStr", "assertNum")
   assertEither(v[1], `(${varName || v})[1]`, assertStr, assertNum, "assertStr", "assertNum")
 }
 
-let assertKeyPairArray = (v, varName) => {
-  if (!Array.isArray(v)) throw `${varName || v} must be an array.`;
+let assertPairArray = (v, varName) => {
+  assertArray(v, varName)
   if (v.length == 0) throw `${varName || v} must have at least one element`;
   
   for(let i in v){
@@ -57,8 +62,8 @@ let assertKeyPairArray = (v, varName) => {
 }
 
 // ---------Helper Functions---------
-// These are helper functions. They will not be exported, and therefore will not be checking parameters. 
-// There is a correct way to use them. There is no incorrect way to use them. 
+// These are helper functions. They will not be exported, and therefore will assume that parameters are valid.
+// There is a correct way to use them. There is no incorrect way to use them. Good Luck
 
 let calculateFrequencies = (arr) => {
   let fqDict = {}
@@ -142,7 +147,57 @@ let median = (arr) => {
   }
 }
 
+let objEquality = (obj1, obj2) => {
+  // this is not efficent, but it covers cases where obj1 is a subset of obj2. 
+  // simpler than building that logic into the algo intelligently.
+  return (objEqualityHelper(obj1,obj2) && objEqualityHelper(obj2,obj1))
+}
 
+
+let objEqualityHelper = (obj1, obj2) => {
+  let result = true
+  for (let i in obj1) {
+    let a = obj1[i]
+    let b = obj2[i]
+    if(!b) result = false;
+    if(typeof a != typeof b) result = false;
+
+    switch (typeof a){
+      case 'string':
+        if(a.localeCompare(b) != 0) result = false;
+        break;
+      
+      case 'boolean':
+        if(a!=b) result = false;
+        break;
+
+      case 'number':
+        if (a != b) {
+          if(!isNaN(a) || !isNaN(b)) result = false
+        }
+        break;
+
+      case 'undefined':
+        break; // we already compared types, so we know that if one is undefined, the other must be as well.
+
+      case 'object':
+        if (a==null && a!=b){ result = false }
+        else if (Array.isArray(a)) {
+          if(!Array.isArray(b)) result = false;
+          if(!deepArrayEquality(a,b)) result = false;
+        } else { // if its not an array, and its not null, then it must be an object.
+          if(!objEquality(a,b)) result = false;
+        }
+        break;
+  
+        default:
+          throw 'Unexpected Data type found inside an object.'
+    }
+  }
+
+  // if we got through that gauntlet, then we can confidently return true
+  return result;
+}
 
 // ------------ Exported FNs ---------------
 
@@ -151,7 +206,6 @@ export let arrayAnalysis = (arr) => {
   assertNumArray(arr, "Arg1")
 
   arr.sort( (a,b) => a-b );
-  console.dir(arr);
 
   let avg = calculateAverage(arr)
 
@@ -182,7 +236,7 @@ export let arrayAnalysis = (arr) => {
 
 
 export let mergeKeyValuePairs = (...arrays) => {
-  assertKeyPairArray(arrays,"Arguments")
+  assertPairArray(arrays,"Arguments")
 
 
   let KVPairs = {}
@@ -216,10 +270,66 @@ export let mergeKeyValuePairs = (...arrays) => {
   }
 
   return KVPairs
-
-  //this function takes in a variable number of arrays that's what the ...arrays signifies.  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 };
 
-let deepArrayEquality = (...arrays) => {
-  //this function takes in a variable number of arrays that's what the ...arrays signifies https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+export let deepArrayEquality = (...arrays) => {
+  let result = true // please ask me about this if you really want to know
+  for (let i in arrays) {
+    assertArray(arrays[i], `Argument #${i}`)
+    if (arrays[i].length == 0) throw `Argument #${i} is empty. All arguments must contain at least one element`
+  }
+
+  if (arrays.length <2) {
+    throw `Must pass at least two arrays to compare. recieved ${arrays.length}`
+  }
+
+
+  let baseArray = arrays[0];  // each array will be compared to the first. we're going to store that here, for easy reference.
+  
+  for (let argIndex in arrays) {
+    let x = arrays[argIndex];
+    if(baseArray.length != x.length) result = false;
+
+    for(let arrayIndex in x){
+      let a = x[arrayIndex];
+      let b = baseArray[arrayIndex];
+
+      if ((typeof a) != (typeof b)) result = false;
+
+      switch (typeof a){
+        case 'string':
+          if(a.localeCompare(b) != 0) result = false;
+          break;
+        
+        case 'boolean':
+          if(a!=b) return false;
+          break;
+
+        case 'number':
+          if (a != b) {
+            if(!isNan(a) || !isNaN(b)) result = false
+          }
+          break;
+
+        case 'undefined':
+          break; // we already compared types, so we know that if one is undefined, the other must be as well.
+
+        case 'object':
+          if (a==null && a!=b){ result = false }
+          else if (Array.isArray(a)) {
+            if(!Array.isArray(b)) result = false;
+            if(!deepArrayEquality(a,b)) result = false;
+          } else { // if its not an array, and its not null, then it must be an object.
+            if(!objEquality(a,b)) result = false;
+          }
+          break;
+        
+        default:
+          throw `Data type not supported. Expected (string||boolean||number||undefined||null||Array||Object), recieved ${typeof a} at Arg #${argIndex}, index [${arrayIndex}]`
+          
+      }
+    }
+
+  }
+  return result;
 };
