@@ -273,7 +273,8 @@ export let mergeKeyValuePairs = (...arrays) => {
 };
 
 export let deepArrayEquality = (...arrays) => {
-  let result = true // please ask me about this if you really want to know
+  let result = true // we dont want to short circuit the moment we find an inequality, so we have to remember the inequality until the entirety of each array has been checked. 
+                    // otherwise, `dAE([0, Symbol("illegal")], [1, Symbol("Illegal")])` will return false, rather than error
   for (let i in arrays) {
     assertArray(arrays[i], `Argument #${i}`)
     if (arrays[i].length == 0) throw `Argument #${i} is empty. All arguments must contain at least one element`
