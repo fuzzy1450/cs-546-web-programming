@@ -1,4 +1,5 @@
 import {arrayAnalysis, mergeKeyValuePairs, deepArrayEquality} from './arrayUtils.js'
+import {replaceCharsAtIndexes, anagrams, charSwap} from './stringUtils.js'
 
 /* TODO: Import the functions from your three modules here and write two test cases for each function.. You should have a total of 18 test cases. 
 do not forget that you need to create the package.json and add the start command to run app.js as the starting script*/
@@ -62,3 +63,27 @@ try {
 }
 
 
+
+try {
+   let testStr = replaceCharsAtIndexes(`i really hope i implemented this correctly. 
+      the instructions were slightly vague, tbh. 
+      Wish i knew what happened if a character is represented at 2 of the passed indexes.
+      but w/e :)`, [2,5,9,11,14,17,40,6]);
+
+   let expectedResult = `i realay hope i  moleiented t  s co eectay. 
+      toe  nst uct ons weee sl g tay vague, tbo. 
+      W s    knew woat  aeoened  f a coa actee  s  eeeesented at 2 of t e oassed  ndexes.
+      but w/e :)`
+
+   if (testStr != expectedResult) throw 'They ought to be equal'
+   console.log("replaceCharsAtIndexes passed test case")
+} catch (e) {
+   console.error("replaceCharsAtIndexes failed test case")
+}
+
+try {
+   replaceCharsAtIndexes(`  this one is going to fail for sure                                but we shall see`, [1, 100, 10]);
+   console.error("replaceCharsAtIndexes failed test case - failed to error")
+} catch (e) {
+   console.log("replaceCharsAtIndexes passed test case - failed successfully")
+}
