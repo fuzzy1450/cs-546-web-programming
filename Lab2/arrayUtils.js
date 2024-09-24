@@ -87,56 +87,56 @@ let median = (arr) => {
 }
 
 let objEquality = (obj1, obj2) => {
+  let objEqualityHelper = (obj1, obj2) => { // helper function that does all the work. see below
+    let result = true
+    for (let i in obj1) {
+      let a = obj1[i]
+      let b = obj2[i]
+      if(!b) result = false;
+      if(typeof a != typeof b) result = false;
+  
+      switch (typeof a){
+        case 'string':
+          if(a.localeCompare(b) != 0) result = false;
+          break;
+        
+        case 'boolean':
+          if(a!=b) result = false;
+          break;
+  
+        case 'number':
+          if (a != b) {
+            if(!isNaN(a) || !isNaN(b)) result = false
+          }
+          break;
+  
+        case 'undefined':
+          break; // we already compared types, so we know that if one is undefined, the other must be as well.
+  
+        case 'object':
+          if (a==null && a!=b){ result = false }
+          else if (Array.isArray(a)) {
+            if(!Array.isArray(b)) result = false;
+            if(!deepArrayEquality(a,b)) result = false;
+          } else { // if its not an array, and its not null, then it must be an object.
+            if(!objEquality(a,b)) result = false;
+          }
+          break;
+    
+          default:
+            throw 'Unexpected Data type found inside an object.'
+      }
+    }
+  
+    // if we got through that gauntlet, then we can confidently return true
+    return result;
+  }
+
   // this is not efficent, but it covers cases where obj1 is a subset of obj2. 
   // simpler than building that logic into the algo intelligently.
   return (objEqualityHelper(obj1,obj2) && objEqualityHelper(obj2,obj1))
 }
 
-
-let objEqualityHelper = (obj1, obj2) => {
-  let result = true
-  for (let i in obj1) {
-    let a = obj1[i]
-    let b = obj2[i]
-    if(!b) result = false;
-    if(typeof a != typeof b) result = false;
-
-    switch (typeof a){
-      case 'string':
-        if(a.localeCompare(b) != 0) result = false;
-        break;
-      
-      case 'boolean':
-        if(a!=b) result = false;
-        break;
-
-      case 'number':
-        if (a != b) {
-          if(!isNaN(a) || !isNaN(b)) result = false
-        }
-        break;
-
-      case 'undefined':
-        break; // we already compared types, so we know that if one is undefined, the other must be as well.
-
-      case 'object':
-        if (a==null && a!=b){ result = false }
-        else if (Array.isArray(a)) {
-          if(!Array.isArray(b)) result = false;
-          if(!deepArrayEquality(a,b)) result = false;
-        } else { // if its not an array, and its not null, then it must be an object.
-          if(!objEquality(a,b)) result = false;
-        }
-        break;
-  
-        default:
-          throw 'Unexpected Data type found inside an object.'
-    }
-  }
-
-  // if we got through that gauntlet, then we can confidently return true
-  return result;
-}
 
 // ------------ Exported FNs ---------------
 
