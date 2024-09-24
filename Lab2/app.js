@@ -87,3 +87,36 @@ try {
 } catch (e) {
    console.log("replaceCharsAtIndexes passed test case - failed successfully")
 }
+
+try {
+   let arr = anagrams('the tars bubble, a star twinkles, and the tsar enjoys the arts', "rats");
+   if(!arr.includes("tars", "star", "tsar", "arts")) throw `Bad response - ${arr}`
+   console.log("anargams passed test case")
+} catch (e) {
+   console.error("anagrams failed test case")
+}
+
+try {
+   let arr = anagrams('easy error', "        ");
+   console.error("anargams failed test case - failed to error")
+} catch (e) {
+   console.log("anagrams passed test case - failed successfully")
+}
+
+
+try {
+   let cs = charSwap("test string deluxe  ", "super mega ultimate test string triple deluxe esq.")
+
+   if (cs != "eluxe esq.g deluxe   super mega ultimate test string triple dtest strin") throw 'idk what you got but its also probably gibberish'
+   console.log("charSwap passed test case")
+} catch (e) {
+   console.error("charSwap failed test case")
+}
+
+try {
+   charSwap("Dont listen to that next guy",["Definetly a valid test string. trust me.", "I even have a length of at least 2.", "3!"])
+
+   console.error("charSwap failed test case - did not error")
+} catch (e) {
+   console.log("charSwap passed test case - failed successfully")
+}

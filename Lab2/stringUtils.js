@@ -1,4 +1,31 @@
 import * as paramUtils from './paramUtils.js'
+// ------ helper functions ------
+let calcAnagramIdentity = (str) => {
+      let d = {}
+      for (let i in str) {
+            let c = str[i].toLowerCase();
+            if(!d[c]) d[c]=0;
+            d[c]++;
+      }
+      return d
+}
+
+let anagramEquality = (a1, a2) => {
+      let anagramEqualityHelper = (a1, a2) => {
+            for(let i in a1) {
+                  if(a1[i] != a2[i]) return false;
+            }
+            return true;
+      }
+
+      return anagramEqualityHelper(a1, a2) && anagramEqualityHelper(a2, a1) // its quick and its easy
+}
+
+let min = (a, b) => a>b?b:a // ezpz who needs a library?
+
+
+
+// -------- stub starts here --------
 
 export let replaceCharsAtIndexes = (str, idxArr) => {
       paramUtils.assertStr(str, "First argument")
@@ -41,6 +68,42 @@ export let replaceCharsAtIndexes = (str, idxArr) => {
       return newStr;
 };
 
-export let anagrams = (str, target) => {};
+export let anagrams = (str, target) => {
+      paramUtils.assertStr(str, "1st Argument")
+      paramUtils.assertStr(target, "2nd Argument")
 
-export let charSwap = (str1, str2) => {};
+      paramUtils.assertStr(str.trim(), "1st Argument (trimmed)")
+      paramUtils.assertStr(target.trim(), "2nd Argument (trimmed)")
+
+      let words = str.split(" ")
+
+      let targetID = calcAnagramIdentity(target)
+      
+      let foundAnagrams = words.filter((word) => anagramEquality(calcAnagramIdentity(word), targetID)) 
+
+      return foundAnagrams;
+};
+
+export let charSwap = (str1, str2) => {
+      paramUtils.assertStr(str1, "1st Argument")
+      paramUtils.assertStr(str2, "2nd Argument")
+      paramUtils.assertStr(str1.trim(), "1st Argument")
+      paramUtils.assertStr(str2.trim(), "2nd Argument")
+      paramUtils.assertLengthMin(str1, "1st Argument", 2)
+      paramUtils.assertLengthMin(str2, "2st Argument", 2)
+      
+
+      let n = parseInt(min(str1.length, str2.length)/2)
+      let a1 = str1.split('')
+      let a2 = str2.split('')
+
+      let l = str2.length;
+      for (let i = 0; i < n; i++) {
+            // swap some chars
+            let x = a1[i];
+            a1[i] = a2[(l-n)+i];
+            a2[(l-n)+i] = x;
+      }
+
+      return `${a1.join('')} ${a2.join('')}`
+};

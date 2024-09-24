@@ -40,6 +40,10 @@ export let assertArray = (v, varName) => {
     if (!Array.isArray(v)) throw `(${varName || v}) must be an array.`;
 }
 
+export let assertLengthMin = (v, varName, m) => {
+    if(v.length < m) throw `${varName || v} has length ${v.length} - a minimum of ${m} is required`
+}
+
 export let assertValidIndexArray = (v, varName, max, min=0) => {
     assertNumArray(v, varName)
     for (let i in v) {
