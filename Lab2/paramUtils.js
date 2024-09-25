@@ -68,4 +68,40 @@ export let assertPairArray = (v, varName) => {
       assertKeyPair(v[i], `Arg${i}`)
     }
 }
-  
+
+export let assertObject = (v, varName) => { // the easiest assertion in the world
+    if (typeof v != "object") throw `${varName || v} must be an object. Recieved ${typeof v}`
+    if (Array.isArray(v)) throw `${varName || v} cannot be an array`
+}
+
+export let assertObjectNotEmpty = (v, varName) => {
+    assertObject(v, varName);
+    let n = 0;
+    for (let i in v) {
+        n++;
+    }
+    if (!n) throw `${varName || v} must not be empty.`
+}
+
+export let assertObjArray = (v, varName) => { // asserts that v is an array containing exclusively non-empty object. Or nothing.
+    assertArray(v, varName)
+
+    for (let i in v) {
+        assertObjectNotEmpty(v[i])
+    }
+}
+
+export let assertFunc = (v, varName) => {
+    if (typeof v != 'function') throw `${varName || v} must be a function. Recieved type ${typeof v}`
+}
+
+export let assertFuncNumToNum = (v, varName) => { // asserts that the function returns a num as the output. Assumes that the fn requires a num as the parameter.
+    assertFunc(v, varName)
+    let z = v(1)
+    try {
+        assertNum(z)
+    } catch (e) {
+        throw `${varName || v} did not return a number`
+    }
+}
+

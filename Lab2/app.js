@@ -1,5 +1,6 @@
 import {arrayAnalysis, mergeKeyValuePairs, deepArrayEquality} from './arrayUtils.js'
 import {replaceCharsAtIndexes, anagrams, charSwap} from './stringUtils.js'
+import {processObjects, similarKeysValues, flipKeysForStringsAndNumbers} from './objectUtils.js'
 
 /* TODO: Import the functions from your three modules here and write two test cases for each function.. You should have a total of 18 test cases. 
 do not forget that you need to create the package.json and add the start command to run app.js as the starting script*/
@@ -85,7 +86,7 @@ try {
    replaceCharsAtIndexes(`  this one is going to fail for sure                                but we shall see`, [1, 100, 10]);
    console.error("replaceCharsAtIndexes failed test case - failed to error")
 } catch (e) {
-   console.log("replaceCharsAtIndexes passed test case - failed successfully")
+   console.log("replaceCharsAtIndexes passed test case - successfully produced error")
 }
 
 try {
@@ -106,8 +107,7 @@ try {
 
 try {
    let cs = charSwap("test string deluxe  ", "super mega ultimate test string triple deluxe esq.")
-
-   if (cs != "eluxe esq.g deluxe   super mega ultimate test string triple dtest strin") throw 'idk what you got but its also probably gibberish'
+   if (cs != "luxe esq.ng deluxe super mega ultimate test string triple detest stri") throw 'idk what you got but its also probably gibberish'
    console.log("charSwap passed test case")
 } catch (e) {
    console.error("charSwap failed test case")
@@ -118,5 +118,97 @@ try {
 
    console.error("charSwap failed test case - did not error")
 } catch (e) {
-   console.log("charSwap passed test case - failed successfully")
+   console.log("charSwap passed test case - successfully produced error")
 }
+
+
+try {
+   const one = {a: 2, b:8, x:5, y:2, z:11};
+   const two = {f: 2, g:51, i:8, j:3, k:3};
+   const three = {a:100, j: 100};
+   const four = {i:6,j:4,k:3, y:0};
+
+   const func = (x) => 1/x
+
+   let ret = processObjects([one,two,three,four],func)
+
+   if (ret.x != 0.2) throw 'fail!'
+   if (ret.y != Infinity) throw 'fail!'
+
+   if (ret.f != 0.5) throw 'fail!'
+
+   console.log("processObject passed test case")
+} catch (e) {
+   console.error("processObject failed test case")
+}
+
+
+try {
+   const one   = {1:1}
+   const two   = {1:2, 2:2}
+   const three = {1:3, 2:3, 3:3}
+   const four  = {1:4, 2:4, 3:4, 4:4}
+   const five  = {1:5, 2:5, 3:5, 4:5, 5:5}
+
+   const func = (x) => `${x}`
+
+   processObjects([one,two,three,four,five], func) 
+   // the only error here is that func does not return a number
+   // the spec says that we can assume the inputs for func are correct because we check them
+   // but it says nothing about the output. According to the question, the output of the func must be a number.
+
+
+   console.error("processObject failed test case - did not error")
+} catch (e) {
+   console.log("processObject passed test case - successfully produced error")
+}
+
+
+try {
+   const obj1 = { a: {b: {c: {d:{e:{f:{g:"100"}}}}}} };
+   const obj2 = { a: {b: {c: {d:{e:{f:{g:100}, h:0}, i:0}, j:0}, l:0}, m:0}, p:0 };
+   let skv = similarKeysValues(obj1, obj2)
+
+   if (skv.a.b.c.d.e.f.g !== "100") throw "Fail!";
+   
+   console.log("similarKeysValues passed test case")
+} catch (e) {
+   console.error("similarKeysValues failed test case")
+}
+
+
+try {
+   similarKeysValues({0:0,1:1,2:2,3:3,4:4},[0,1,2,3,4])
+   console.error("similarKeysValues failed test case - did not error")
+} catch (e) {
+   console.log("similarKeysValues passed test case - successfully produced error")
+}
+
+
+try {
+   const o1 = {1:'a', 'b':{ba:[1,2,3,4,5]}, c:[1,2,3,4,5]}
+
+
+   const r1 = flipKeysForStringsAndNumbers(o1)
+
+   if (r1.b[4] != "ba_3") throw 'Fail!';
+
+   console.log("flipKeysForStringsAndNumbers passed test case")
+} catch (e) {
+   console.error("flipKeysForStringsAndNumbers failed test case")
+
+}
+
+
+try {
+
+   const o2 = {1:'a', 'b':{ba:[1,2,3,4,5]}, c:[1,2,3,4,5], d:{e:{f:{g:[{}]}}}}
+
+   const r2 = flipKeysForStringsAndNumbers(o2)
+
+   console.error("flipKeysForStringsAndNumbers failed test case - did not error")
+} catch (e) {
+   console.log("flipKeysForStringsAndNumbers passed test case - successfully produced error")
+   
+}
+
