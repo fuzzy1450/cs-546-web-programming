@@ -16,7 +16,7 @@ try { // pass test
     const anyze2 = arrayAnalysis([[]]);
     console.error('arrayAnalysis failed test case - did not error');
  } catch (e) {
-    console.log('arrayAnalysis passed test case - produced expected error');
+    console.log('arrayAnalysis passed test case - successfully produced error');
  }
 
  // mergeKeyValuePairs Tests
@@ -31,7 +31,7 @@ try { // pass test
     const merged2 = mergeKeyValuePairs( [1,2],[3,7],["t", ["im in an array :)"]], [1,0])
     console.error('mergeKeyValuePairs failed test case - did not error');
  } catch (e) {
-    console.log('mergeKeyValuePairs passed test case - produced expected error');
+    console.log('mergeKeyValuePairs passed test case - successfully produced error');
  }
 
 
@@ -59,7 +59,7 @@ try {
     console.error("deepArrayEquality failed test case - did not error")
 
 } catch (e) {
-    console.log('deepArrayEquality passed test case - produced expected error')
+    console.log('deepArrayEquality passed test case - successfully produced error')
 }
 
 
@@ -100,7 +100,7 @@ try {
    let arr = anagrams('easy error', "        ");
    console.error("anargams failed test case - failed to error")
 } catch (e) {
-   console.log("anagrams passed test case - failed successfully")
+   console.log("anagrams passed test case - successfully produced error")
 }
 
 
@@ -114,7 +114,7 @@ try {
 }
 
 try {
-   charSwap("Dont listen to that next guy",["Definetly a valid test string. trust me.", "I even have a length of at least 2.", "3!"])
+   charSwap("Dont listen to that next guy",["Definetly a valid test string. trust me.", "I even have a length of at least 2:", "3!"])
 
    console.error("charSwap failed test case - did not error")
 } catch (e) {
