@@ -238,7 +238,7 @@ export let deepArrayEquality = (...arrays) => {
 
       switch (typeof a){
         case 'string':
-          if(a.localeCompare(b) != 0) result = false;
+          if(a.trim().localeCompare(b.trim()) != 0) result = false;
           break;
         
         case 'boolean':
