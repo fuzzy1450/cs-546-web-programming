@@ -2,7 +2,8 @@
 // ----------Type Enforcement Functions----------
 export let assertNum = (v, varName) => {
     if (typeof v !== 'number') throw `${varName || v} must be a number. Recieved type ${typeof v}`;
-    if (isNaN(v)) throw `${varName || v} is NaN`;
+    if (isNaN(v)) throw `${varName || v} must be a Number. Recieved NaN`;
+    if (v == Infinity) throw `${varName || v} must be a Number. Recieved Infinity`
   
 }
 
