@@ -1,12 +1,45 @@
-//TODO EXPORT AND IMPLEMENT THE FOLLOWING FUNCTIONS IN ES6 FORMAT
-//Books data link: https://gist.githubusercontent.com/graffixnyc/3381b3ba73c249bfcab1e44d836acb48/raw/e14678cd750a4c4a93614a33a840607dd83fdacc/books.json
+import axios from 'axios';
+import * as paramUtils from './paramUtils.js'
 
-const getBookById = async (id) => {};
+class BookData { // an object we will use to cache the data
+    static d = null;
+    static async load() {
+            const { data } = await axios.get('https://gist.githubusercontent.com/graffixnyc/3381b3ba73c249bfcab1e44d836acb48/raw/e14678cd750a4c4a93614a33a840607dd83fdacc/books.json')
+            this.d = data.sort(lastNameCompare) // this will be the array of book objects
+    };
 
-const booksByFormat = async () => {};
+    static async get() {
+        if (!this.d) await this.load();
+        return this.d;
+    };
 
-const mostPopularGenre = async () => {};
+    static async firstMatch(field, value) {
+        let arr = await this.get()
+        for (let i in arr) {
+            let book = arr[i];
+            if (book[field] == value) return author;
+        }
 
-const booksByPublisher = async (publisher) => {};
+        throw 'no match';
+    };
 
-const averagePriceByGenre = async (genre) => {};
+}
+
+export const getBookById = async (id) => {
+    paramUtils.assertStr(id, "Author ID");
+    let trimId = id.trim();
+    paramUtils.assertStr(id, "Author ID (trimmed)");
+    try{
+        return AuthorData.firstMatch("id", id)
+    } catch (e) {
+        throw 'book not found'
+    }
+};
+
+export const booksByFormat = async () => {};
+
+export const mostPopularGenre = async () => {};
+
+export const booksByPublisher = async (publisher) => {};
+
+export const averagePriceByGenre = async (genre) => {};
