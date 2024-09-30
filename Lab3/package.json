@@ -1,0 +1,12 @@
+{
+  "name": "cs-546-lab-3",
+  "version": "1.0.0",
+  "description": "The 3rd lab for CS546 (24F)",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+	  "start": "node app.js"
+  },
+  "author": "Evan Kupsch 10428138",
+  "license": "ISC"
+}
