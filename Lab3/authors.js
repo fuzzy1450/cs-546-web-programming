@@ -70,7 +70,28 @@ export const authorsMultipleGenres = async () => {
     return r;
 };
 
-export const averagePageCount = async (firstName, lastName) => {};
+export const averagePageCount = async (firstName, lastName) => {
+    paramUtils.assertStr(firstName, "First Name");
+    paramUtils.assertStr(lastName, "Last Name");
+    let trimFirst = firstName.trim();
+    let trimLast = lastName.trim()
+    paramUtils.assertStr(trimFirst, "First Name (trimmed)");
+    paramUtils.assertStr(trimLast, "Last Name (trimmed)");
+
+    let author = await utils.namesToAuthor(trimFirst, trimLast);
+
+    if (!author) throw 'Author Not Found';
+    
+    let bookList = await books.utils.IDsToBooks(author.books);
+    let sum = 0;
+    let n = 0;
+    for (let i in bookList) {
+        sum+= bookList[i].pageCount;
+        n++;
+    }
+    return (n ? sum/n : 0); // if there are no books (n=0) then we cant divide sum by n.
+
+};
 
 export const getAuthorsByAgeRange = async (minAge, maxAge) => {};
 

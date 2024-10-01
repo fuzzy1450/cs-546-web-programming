@@ -31,6 +31,13 @@ try{
     console.log (e);
 }
 
+try{
+    const APC = await authors.averagePageCount("Madelaine", "Armatage"); 
+    console.log (APC);
+}catch(e){
+    console.log (e);
+}
+
 
 try{
     const bookData = await books.getBookById("4efdb199-5a0f-4410-bded-ce07990c6aa4");
