@@ -56,7 +56,7 @@ export const utils = { // etc. utilities
 export const getBookById = async (id) => {
     paramUtils.assertStr(id, "Book ID");
     let trimId = id.trim();
-    paramUtils.assertStr(id, "Author ID (trimmed)");
+    paramUtils.assertStr(id, "Book ID (trimmed)");
     try{
         return BookData.firstMatch("id", id)
     } catch (e) {
