@@ -47,19 +47,18 @@ class AuthorData { // an object we will use to cache the data
         throw 'no match';
     };
 
+    first() {
+        return this.data[0]
+    }
+
 }
 
 export const utils = { // etc. utilities
     async namesToAuthor(first, last) { // retrieve an author by first and last name. case insensitive
-        let authors = (await AuthorData.get()).toArray();
-        for (let i in authors) {
-            let author = authors[i];
-            if (author.first_name.toLowerCase() == first.toLowerCase() 
-              && author.last_name.toLowerCase() == last.toLowerCase()) {
-                return author;
-                }
-        }
-        return null;
+        let authors = await AuthorData.get()
+        let author = authors.filter("first_name", first, true).filter("last_name", last, true).first()
+
+        return author;
     }
 }
 
