@@ -29,6 +29,21 @@ class AuthorData { // an object we will use to cache the data
 
 }
 
+export const utils = { // etc. utilities
+    async namesToAuthor(first, last) { // retrieve an author by first and last name. case insensitive
+        let authors = await AuthorData.get();
+        for (let i in authors) {
+            let author = authors[i];
+            if (author.first_name.toLowerCase() == first.toLowerCase() 
+              && author.last_name.toLowerCase() == last.toLowerCase()) {
+                return author;
+                }
+        }
+        return null;
+    }
+}
+
+
 export const getAuthorById = async (id) => {
     paramUtils.assertStr(id, "Author ID");
     let trimId = id.trim();
