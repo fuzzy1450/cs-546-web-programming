@@ -1,5 +1,6 @@
 import axios from 'axios';
-import * as paramUtils from './paramUtils.js'
+import * as paramUtils from './paramUtils.js';
+import * as books from "./books.js";
 
 
 let lastNameCompare = (a, b) => a.last_name.localeCompare(b.last_name);
@@ -39,7 +40,20 @@ export const getAuthorById = async (id) => {
     }
 };
 
-export const authorsMultipleGenres = async () => {};
+export const authorsMultipleGenres = async () => {
+    let r = []
+    let authors = (await AuthorData.get()).sort(lastNameCompare);
+    for (let i in authors) {
+        let author = authors[i];
+        
+        let bookList = await books.utils.IDsToBooks(author.books)
+
+        
+        let authorGenres = books.utils.booksToGenres(bookList)
+        if (authorGenres.length > 1) r.push(`${author.first_name} ${author.last_name}`);
+    }
+    return r;
+};
 
 export const averagePageCount = async (firstName, lastName) => {};
 
