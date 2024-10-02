@@ -88,13 +88,18 @@ export const utils = { // etc. utilities
         return author;
     },
 
-    authorToAge(author) {
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth();
-        let day = date.getDay();
+    authorToAge(author) {   // this function calculates two ages via two different methods to try and obtain concensus
+        // the first method, checkes the duration of life. (not always equal to age)
+        let now = new Date();
+        let then = new Date(author.date_of_birth);
+        let robotAge = now-then;
+        let roboYears = robotAge/(1000*60*60*24*365);
 
+        // now we check the birthday by counting birthdays
         let birthday = author.date_of_birth.split("/");
+        let year = now.getFullYear();
+        let month = now.getMonth() + 1;
+        let day = now.getDay();
 
         let age = (year - parseInt(birthday[2])); // rough birthday estimate. assumes they already had a birthday this year
         age--; // invert the assumption - they did not have a birthday this year.
@@ -104,7 +109,11 @@ export const utils = { // etc. utilities
         } else if (month == parseInt(birthday[0]) && day >= parseInt(birthday[1])) {
             age++;
         }
-        return age;
+        //if(parseInt(roboYears) != age) console.debug(`Age disparity. r: ${roboYears} c: ${age} b: ${author.date_of_birth}`);
+
+        return age; // counting years is more accurate to find their age, rather than countingthe duration since their birth.
+        // but if for some reason you guys expect me to use Date() - Date(), then just swap to the below return statement
+        //return parseInt(roboYears);
     }
 }
 
