@@ -19,28 +19,38 @@ import * as books from "./books.js";
 
 try{
     const authorData = await authors.getAuthorById("1871e6d7-551f-41cb-9a07-08240b86c95c");
-    console.log (authorData);
+    if (authorData.first_name != "Derward" || authorData.last_name != "Ticic") throw `Wrong Author found. Expected Derward Ticic, got ${authorData.first_name} ${authorData.last_name}`;
+    //console.log (authorData);
+    console.log("getAuthorById passed test")
 }catch(e){
-    console.log (e);
+    console.error("getAuthorById failed test")
+    console.error (e);
 }
 
 try{
     const authorList = await authors.authorsMultipleGenres();
-    console.log (authorList);
+    //console.log (authorList);
+    if(authorList.length != 392) throw `authorList incorrect. expected 392, got ${authorList.length}`;
+    console.log("authorsMultipleGenres passed test")
 }catch(e){
-    console.log (e);
+    console.error ("authorsMultipleGenres failed test");
+    console.error (e);
 }
 
 try{
     const APC = await authors.averagePageCount("Madelaine", "Armatage"); 
-    console.log (APC);
+    //console.log (APC);
+    if(APC != 405.5) throw `APC Value incorrect. expected 405.5, got ${APC}`;
+    console.log("averagePageCount passed test")
+
 }catch(e){
-    console.log (e);
+    console.error("averagePageCount failed test")
+    console.error (e);
 }
 
 try{
-    let min = 1;
-    let max = 10;
+    let min = 25;
+    let max = 55;
     const AgeRange = await authors.getAuthorsByAgeRange(min, max); 
     
 
@@ -49,16 +59,21 @@ try{
 
         if (age < min || age > max) throw `Age out of range at index ${i}`
     }
-    console.log (AgeRange);
+    //console.log (AgeRange);
+    console.log("getAuthorsByAgeRange passed test")
 
 }catch(e){
-    console.log (e);
+    console.error("getAuthorsByAgeRange failed test")
+    console.error (e);
 }
 
 
 try{
     const bookData = await books.getBookById("4efdb199-5a0f-4410-bded-ce07990c6aa4");
-    console.log (bookData);
+    if(bookData.title != "Glorious Technicolor") throw `Wrong book returned. Expected ${bookData.title}, got ${bookData.title}`;
+    //console.log (bookData);
+    console.log("getBookById passed test")
 }catch(e){
-    console.log (e);
+    console.error("getBookById failed test")
+    console.error (e);
 }
