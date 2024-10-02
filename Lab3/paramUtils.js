@@ -7,6 +7,11 @@ export let assertNum = (v, varName) => {
   
 }
 
+export let assertWholeNumber = (v, varName) => {
+    assertNum(v, varName)
+    if (v%1 != 0) throw `${varName || v} must be a whole number. Found a decimal of ${v%1}`
+}
+
 export let assertNumArray = (v, varName) => {
     if (!Array.isArray(v)) throw `${varName || v} must be an array.`;
     if (v.length == 0) throw `${varName || v} must have at least one element.`;

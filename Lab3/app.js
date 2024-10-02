@@ -38,6 +38,23 @@ try{
     console.log (e);
 }
 
+try{
+    let min = 1;
+    let max = 10;
+    const AgeRange = await authors.getAuthorsByAgeRange(min, max); 
+    
+
+    for (let i in AgeRange) {
+        let age = authors.utils.authorToAge(AgeRange[i]);
+
+        if (age < min || age > max) throw `Age out of range at index ${i}`
+    }
+    console.log (AgeRange);
+
+}catch(e){
+    console.log (e);
+}
+
 
 try{
     const bookData = await books.getBookById("4efdb199-5a0f-4410-bded-ce07990c6aa4");

@@ -25,7 +25,7 @@ class AuthorData { // an object we will use to cache the data
         return this.data
     }
 
-    filter(field, value, discardCase=false) {
+    filterEQ(field, value, discardCase=false) {     // filter with an equals comparison
         let arr = this.data
         let ret = []
         for (let i in arr) {
@@ -36,6 +36,33 @@ class AuthorData { // an object we will use to cache the data
 
         return new AuthorData(ret);
     }
+
+
+    filterAgeMin(min) {    // filter the authors by age maximum (inclusive)
+        let arr = this.data
+        let ret = []
+        for (let i in arr) {
+            let author = arr[i];
+            let age = utils.authorToAge(author);
+            if (age >= min) ret.push(author);
+        }
+
+        return new AuthorData(ret);
+    }
+
+
+    filterAgeMax(max) {    // filter the authors by age maximum (inclusive)
+        let arr = this.data
+        let ret = []
+        for (let i in arr) {
+            let author = arr[i];
+            let age = utils.authorToAge(author);
+            if (age <= max) ret.push(author);
+        }
+
+        return new AuthorData(ret);
+    }
+
 
     firstMatch(field, value) {
         let arr = this.data
@@ -48,17 +75,36 @@ class AuthorData { // an object we will use to cache the data
     };
 
     first() {
-        return this.data[0]
+        return this.data[0];
     }
 
 }
 
 export const utils = { // etc. utilities
     async namesToAuthor(first, last) { // retrieve an author by first and last name. case insensitive
-        let authors = await AuthorData.get()
-        let author = authors.filter("first_name", first, true).filter("last_name", last, true).first()
+        let authors = await AuthorData.get();
+        let author = authors.filterEQ("first_name", first, true).filterEQ("last_name", last, true).first();
 
         return author;
+    },
+
+    authorToAge(author) {
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDay();
+
+        let birthday = author.date_of_birth.split("/");
+
+        let age = (year - parseInt(birthday[2])); // rough birthday estimate. assumes they already had a birthday this year
+        age--; // invert the assumption - they did not have a birthday this year.
+        // now we need to check if they had a birthday this year. if they did, we need to add 1.
+        if(month > parseInt(birthday[0])) {
+            age++;
+        } else if (month == parseInt(birthday[0]) && day >= parseInt(birthday[1])) {
+            age++;
+        }
+        return age;
     }
 }
 
@@ -113,6 +159,20 @@ export const averagePageCount = async (firstName, lastName) => {
 
 };
 
-export const getAuthorsByAgeRange = async (minAge, maxAge) => {};
+export const getAuthorsByAgeRange = async (minAge, maxAge) => {
+    paramUtils.assertWholeNumber(minAge, "1st Argument");
+    paramUtils.assertWholeNumber(maxAge, "2nd Argument");
+    if (minAge < 1) throw `1st Argument must be greater than or equal to 1`;
+    if (minAge >= maxAge) throw `minAge cannot be greater or equal to maxAge`;
+
+    let Authors = (await AuthorData.get()).filterAgeMin(minAge).filterAgeMax(maxAge);
+
+    let ret = Authors.toArray();
+    if (ret.length == 0) throw `No Authors found between the ages of ${minAge} and ${maxAge}`;
+
+    return ret;
+
+
+};
 
 export const authorsByGenre = async (genre) => {};
