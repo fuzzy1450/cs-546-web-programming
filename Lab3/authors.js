@@ -135,7 +135,7 @@ export const utils = { // etc. utilities
 export const getAuthorById = async (id) => {
     paramUtils.assertStr(id, "Author ID");
     let trimId = id.trim();
-    paramUtils.assertStr(id, "Author ID (trimmed)");
+    paramUtils.assertStr(trimId, "Author ID (trimmed)");
     try{
         let authors = await AuthorData.get()
         return authors.firstMatch("id", id)

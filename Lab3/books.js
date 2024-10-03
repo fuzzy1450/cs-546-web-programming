@@ -68,7 +68,7 @@ export const utils = { // etc. utilities
 export const getBookById = async (id) => {
     paramUtils.assertStr(id, "Book ID");
     let trimId = id.trim();
-    paramUtils.assertStr(id, "Book ID (trimmed)");
+    paramUtils.assertStr(trimId, "Book ID (trimmed)");
     let books = await BookData.get();
 
     try{
