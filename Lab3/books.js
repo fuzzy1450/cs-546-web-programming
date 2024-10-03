@@ -95,7 +95,39 @@ export const booksByFormat = async () => {
 
 };
 
-export const mostPopularGenre = async () => {};
+export const mostPopularGenre = async () => {
+    let books = await BookData.get();
+    let bookList = books.toArray();
+    let genreDict = {};
+
+    for (let i in bookList) {
+        let book = bookList[i];
+        let genreList = book.genres;
+        for (let j in genreList) {
+            let genre = genreList[j]
+            if(genreDict[genre]) {genreDict[genre]++}
+            else {genreDict[genre] = 1};
+        }
+    }
+
+    let s = []
+    let m = 0;
+
+    for (let genre in genreDict) {
+        if(genreDict[genre] > m) {
+            s = [genre];
+            m = genreDict[genre];
+        } else if (genreDict[genre] == m) {
+            s.push(genre);
+        }
+    }
+    let alphaCmp = (a, b) => a.localeCompare(b);
+
+    s.sort(alphaCmp);
+    if(s.length == 1) return s[0];
+    return s;
+
+};
 
 export const booksByPublisher = async (publisher) => {};
 

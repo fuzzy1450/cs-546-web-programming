@@ -103,3 +103,14 @@ try{
     console.error("booksByFormat failed test")
     console.error (e);
 }
+
+try{
+    const popularGenre = await books.mostPopularGenre();
+    //console.dir(popularGenre);
+    if(popularGenre != 'Fiction') throw `Inaccurate popular genre. Expected fiction, got ${popularGenre}. possibly data has been updated.`;
+
+    console.log("mostPopularGenre passed test")
+}catch(e){
+    console.error("mostPopularGenre failed test")
+    console.error (e);
+}
