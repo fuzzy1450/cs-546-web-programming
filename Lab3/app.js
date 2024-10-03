@@ -30,7 +30,7 @@ try{
 try{
     const authorList = await authors.authorsMultipleGenres();
     //console.log (authorList);
-    if(authorList.length != 392) throw `authorList incorrect. expected 392, got ${authorList.length}`;
+    if(authorList.length != 392) throw `authorList incorrect. expected 392, got ${authorList.length}. possibly data has been updated.`;
     console.log("authorsMultipleGenres passed test")
 }catch(e){
     console.error ("authorsMultipleGenres failed test");
@@ -40,7 +40,7 @@ try{
 try{
     const APC = await authors.averagePageCount("Madelaine", "Armatage"); 
     //console.log (APC);
-    if(APC != 405.5) throw `APC Value incorrect. expected 405.5, got ${APC}`;
+    if(APC != 405.5) throw `APC Value incorrect. expected 405.5, got ${APC}. possibly data has been updated.`;
     console.log("averagePageCount passed test")
 
 }catch(e){
@@ -72,7 +72,7 @@ try{
 
 try{
     const authorData = await authors.authorsByGenre("Art");
-    if(authorData.length != 94) throw `Incorrect return length. expected 94, got ${authorData.length}`
+    if(authorData.length != 94) throw `Incorrect return length. expected 94, got ${authorData.length}. possibly data has been updated.`
     //console.log(authorData)
     console.log("authorsByGenre passed test")
 }catch(e){
@@ -96,7 +96,7 @@ try{
 try{
     const formatData = await books.booksByFormat();
     //console.dir(formatData);
-    if(formatData.Hardcover != 646) throw `Inaccurate format statistics. Expected 646, got ${formatData.Hardcover}`;
+    if(formatData.Hardcover != 646) throw `Inaccurate format statistics. Expected 646, got ${formatData.Hardcover}. possibly data has been updated.`;
 
     console.log("booksByFormat passed test")
 }catch(e){
