@@ -2,19 +2,31 @@ import axios from 'axios';
 import * as paramUtils from './paramUtils.js';
 
 class BookData { // an object we will use to cache the data
-    static d = null;
+    static loaded = null;
     static async load() {
             const { data } = await axios.get('https://gist.githubusercontent.com/graffixnyc/3381b3ba73c249bfcab1e44d836acb48/raw/e14678cd750a4c4a93614a33a840607dd83fdacc/books.json')
-            this.d = data // this will be the array of book objects
+            this.loaded = data // this will be the array of book objects
     };
 
     static async get() {
-        if (!this.d) await this.load();
-        return this.d;
+        if (!this.loaded) await this.load();
+        return new AuthorData(this.loaded);
     };
 
-    static async firstMatch(field, value) {
-        let arr = await this.get()
+    constructor (d){
+        this.data = d;
+    }
+
+    toArray() {
+        return this.data
+    }
+
+    first() {
+        return this.data[0];
+    }
+
+    firstMatch(field, value) {
+        let arr = this.data
         for (let i in arr) {
             let book = arr[i];
             if (book[field] == value) return book;
