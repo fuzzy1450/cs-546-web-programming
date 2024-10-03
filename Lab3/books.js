@@ -10,7 +10,7 @@ class BookData { // an object we will use to cache the data
 
     static async get() {
         if (!this.loaded) await this.load();
-        return new AuthorData(this.loaded);
+        return new BookData(this.loaded);
     };
 
     constructor (d){
