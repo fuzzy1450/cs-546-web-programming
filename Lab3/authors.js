@@ -138,7 +138,7 @@ export const getAuthorById = async (id) => {
     paramUtils.assertStr(trimId, "Author ID (trimmed)");
     try{
         let authors = await AuthorData.get()
-        return authors.firstMatch("id", id)
+        return authors.firstMatch("id", trimId)
     } catch (e) {
         throw 'author not found'
     }

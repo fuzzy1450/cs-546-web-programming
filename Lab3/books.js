@@ -72,7 +72,7 @@ export const getBookById = async (id) => {
     let books = await BookData.get();
 
     try{
-        return books.firstMatch("id", id)
+        return books.firstMatch("id", trimId)
     } catch (e) {
         throw 'book not found'
     }
