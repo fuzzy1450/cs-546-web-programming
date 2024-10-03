@@ -91,3 +91,15 @@ try{
     console.error("getBookById failed test")
     console.error (e);
 }
+
+
+try{
+    const formatData = await books.booksByFormat();
+    //console.dir(formatData);
+    if(formatData.Hardcover != 646) throw `Inaccurate format statistics. Expected 646, got ${formatData.Hardcover}`;
+
+    console.log("booksByFormat passed test")
+}catch(e){
+    console.error("booksByFormat failed test")
+    console.error (e);
+}

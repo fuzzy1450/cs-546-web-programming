@@ -78,7 +78,22 @@ export const getBookById = async (id) => {
     }
 };
 
-export const booksByFormat = async () => {};
+export const booksByFormat = async () => {
+    let books = await BookData.get();
+    let bookList = books.toArray();
+    let formatDict = {};
+    for (let i in bookList) {
+        let book = bookList[i];
+        let formatList = book.format;
+        for (let j in formatList) {
+            let fmt = formatList[j]
+            if(formatDict[fmt]) {formatDict[fmt]++}
+            else {formatDict[fmt] = 1};
+        }
+    }
+    return formatDict;
+
+};
 
 export const mostPopularGenre = async () => {};
 
