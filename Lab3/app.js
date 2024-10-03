@@ -15,6 +15,8 @@ Note:
 import * as authors from "./authors.js";
 import * as books from "./books.js";
 
+let s = 0; // successes
+let f = 0; // failures
 
 
 try{
@@ -22,19 +24,23 @@ try{
     if (authorData.first_name != "Derward" || authorData.last_name != "Ticic") throw `Wrong Author found. Expected Derward Ticic, got ${authorData.first_name} ${authorData.last_name}`;
     //console.log (authorData);
     console.log("getAuthorById passed test")
+    s++;
 }catch(e){
     console.error("getAuthorById failed test")
     console.error (e);
+    f++;
 }
 
 try{
     const authorList = await authors.authorsMultipleGenres();
     //console.log (authorList);
     if(authorList.length != 392) throw `authorList incorrect. expected 392, got ${authorList.length}. possibly data has been updated.`;
-    console.log("authorsMultipleGenres passed test")
+    console.log("authorsMultipleGenres passed test");
+    s++;
 }catch(e){
     console.error ("authorsMultipleGenres failed test");
     console.error (e);
+    f++;
 }
 
 try{
@@ -42,10 +48,12 @@ try{
     //console.log (APC);
     if(APC != 405.5) throw `APC Value incorrect. expected 405.5, got ${APC}. possibly data has been updated.`;
     console.log("averagePageCount passed test")
+    s++;
 
 }catch(e){
     console.error("averagePageCount failed test")
     console.error (e);
+    f++;
 }
 
 try{
@@ -61,13 +69,13 @@ try{
     }
     //console.log (AgeRange);
     console.log("getAuthorsByAgeRange passed test")
+    s++;
 
 }catch(e){
     console.error("getAuthorsByAgeRange failed test")
     console.error (e);
+    f++;
 }
-
-
 
 
 try{
@@ -75,9 +83,11 @@ try{
     if(authorData.length != 94) throw `Incorrect return length. expected 94, got ${authorData.length}. possibly data has been updated.`
     //console.log(authorData)
     console.log("authorsByGenre passed test")
+    s++;
 }catch(e){
     console.error("authorsByGenre failed test")
     console.error (e);
+    f++;
 }
 
 
@@ -87,9 +97,11 @@ try{
     if(bookData.title != "Glorious Technicolor") throw `Wrong book returned. Expected "Glorious Technicolor", got "${bookData.title}"`;
     //console.log (bookData);
     console.log("getBookById passed test")
+    s++;
 }catch(e){
     console.error("getBookById failed test")
     console.error (e);
+    f++;
 }
 
 
@@ -97,11 +109,12 @@ try{
     const formatData = await books.booksByFormat();
     //console.dir(formatData);
     if(formatData.Hardcover != 646) throw `Inaccurate format statistics. Expected 646, got ${formatData.Hardcover}. possibly data has been updated.`;
-
     console.log("booksByFormat passed test")
+    s++;
 }catch(e){
     console.error("booksByFormat failed test")
     console.error (e);
+    f++;
 }
 
 try{
@@ -110,19 +123,23 @@ try{
     if(popularGenre != 'Fiction') throw `Inaccurate popular genre. Expected fiction, got ${popularGenre}. possibly data has been updated.`;
 
     console.log("mostPopularGenre passed test")
+    s++;
 }catch(e){
     console.error("mostPopularGenre failed test")
     console.error (e);
+    f++;
 }
 
 try{
     const bookList = await books.booksByPublisher("Skilith");
     //console.dir(bookList);
     if(bookList.length != 2) throw `Inaccurate bookList length. Expected 2, got ${bookList.length}. possibly data has been updated.`;
-    console.log("booksByPublisher passed test")
+    console.log("booksByPublisher passed test");
+    s++;
 }catch(e){
     console.error("booksByPublisher failed test")
     console.error (e);
+    f++;
 }
 
 try{
@@ -130,9 +147,14 @@ try{
     console.log(avgPrice);
     if(avgPrice != 54.51) throw `Inaccurate average price. Expected 54.51, got ${avgPrice}. possibly data has been updated.`;
     console.log("booksByPublisher passed test")
+    s++
 }catch(e){
     console.error("booksByPublisher failed test")
     console.error (e);
+    f++;
 }
 
+
+if (!f) {console.log(`All Positive Tests Passed ${s}`)}
+else {console.log(`Passed ${s}/${s+f}`)}
 
