@@ -69,8 +69,10 @@ export const getBookById = async (id) => {
     paramUtils.assertStr(id, "Book ID");
     let trimId = id.trim();
     paramUtils.assertStr(id, "Book ID (trimmed)");
+    let books = await BookData.get();
+
     try{
-        return BookData.firstMatch("id", id)
+        return books.firstMatch("id", id)
     } catch (e) {
         throw 'book not found'
     }
