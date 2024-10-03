@@ -35,6 +35,32 @@ class BookData { // an object we will use to cache the data
         throw 'no match';
     };
 
+    filterGenre(genre) {    // not case sensitive
+        let arr = this.data;
+        let ret = [];
+        for (let i in arr){
+            let book = arr[i];
+            let genreList = book.genres.map((x)=>x.toLowerCase());
+            if (genreList.includes(genre.toLowerCase())) ret.push(book);
+        }
+
+        return new BookData(ret);
+    }
+
+    calculateAveragePrice(){
+        let arr = this.data;
+        let sum = 0;
+        let n = 0;
+
+        for (let i in arr) {
+            let book = arr[i];
+            sum+=book.price;
+            n++;
+        }
+
+        return n ? sum/n : 0;
+    }
+
 }
 
 export const utils = { // etc. utilities
