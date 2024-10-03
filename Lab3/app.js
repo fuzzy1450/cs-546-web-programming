@@ -125,3 +125,14 @@ try{
     console.error (e);
 }
 
+try{
+    const avgPrice = await books.averagePriceByGenre("Horror");
+    console.log(avgPrice);
+    if(avgPrice != 54.51) throw `Inaccurate average price. Expected 54.51, got ${avgPrice}. possibly data has been updated.`;
+    console.log("booksByPublisher passed test")
+}catch(e){
+    console.error("booksByPublisher failed test")
+    console.error (e);
+}
+
+

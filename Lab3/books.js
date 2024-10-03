@@ -176,4 +176,15 @@ export const booksByPublisher = async (publisher) => {
 
 };
 
-export const averagePriceByGenre = async (genre) => {};
+export const averagePriceByGenre = async (genre) => {
+    paramUtils.assertStr(genre, "1st Argument");
+    let trimGenre = genre.trim().toLowerCase();
+    paramUtils.assertStr(trimGenre, "1st Argument (trimmed)");
+
+    let books = (await BookData.get()).filterGenre(trimGenre);
+    let avgPrice = books.calculateAveragePrice();
+
+    let rounded = parseInt(avgPrice * 100)/100;
+
+    return rounded;
+};
