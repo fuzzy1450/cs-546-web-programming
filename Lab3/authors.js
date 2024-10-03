@@ -194,8 +194,18 @@ export const getAuthorsByAgeRange = async (minAge, maxAge) => {
     if (ret.length == 0) throw `No Authors found between the ages of ${minAge} and ${maxAge}`;
 
     return ret;
+};
 
+export const authorsByGenre = async (genre) => {
+    paramUtils.assertStr(genre, "1st Argument")
+    let genreTrim = genre.trim();
+    paramUtils.assertStr(genreTrim, "1st Argument (trimmed)");
+
+    let Authors = (await (await AuthorData.get()).filterGenre(genreTrim)).toArray();
+    
+    if (Authors.length == 0) throw 'Genre does not exist in dataset';
+
+    return Authors;
 
 };
 
-export const authorsByGenre = async (genre) => {};

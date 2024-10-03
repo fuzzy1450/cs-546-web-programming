@@ -68,6 +68,20 @@ try{
 }
 
 
+
+
+try{
+    const authorData = await authors.authorsByGenre("Art");
+    if(authorData.length != 94) throw `Incorrect return length. expected 94, got ${authorData.length}`
+    //console.log(authorData)
+    console.log("authorsByGenre passed test")
+}catch(e){
+    console.error("authorsByGenre failed test")
+    console.error (e);
+}
+
+
+
 try{
     const bookData = await books.getBookById("4efdb199-5a0f-4410-bded-ce07990c6aa4");
     if(bookData.title != "Glorious Technicolor") throw `Wrong book returned. Expected ${bookData.title}, got ${bookData.title}`;
