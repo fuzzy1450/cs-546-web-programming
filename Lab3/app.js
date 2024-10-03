@@ -155,6 +155,93 @@ try{
 }
 
 
-if (!f) {console.log(`All Positive Tests Passed ${s}`)}
+if (!f) {console.log(`All Positive Tests Passed (${s})`)}
 else {console.log(`Passed ${s}/${s+f}`)}
+let f_c = f; // remember what f is, so we know later if further tests failed
 
+// ------------------- These tests should fail! --------------------
+
+
+
+try{
+    const authorData = await authors.getAuthorById(" 1871e6d7-551f-41cb-9a07-08 240b86c95c              ");
+    console.error("getAuthorById failed to error");
+    console.error(authorData);
+    f++;
+}catch(e){
+    console.log("getAuthorById passed test");
+    s++;
+}
+
+try{
+    const APC = await authors.averagePageCount("Madelaine", 5); 
+
+    console.error("averagePageCount failed to error");
+    console.error(APC);
+    f++;
+
+}catch(e){
+    console.log("averagePageCount passed test");
+    s++;
+}
+
+try{
+    let min = 100;
+    let max = -5;
+    const AgeRange = await authors.getAuthorsByAgeRange(min, max); 
+    
+    console.error("getAuthorsByAgeRange failed to error")
+    console.error(AgeRange);
+    f++;
+
+}catch(e){
+    console.log("getAuthorsByAgeRange passed test");
+    s++;
+}
+
+
+try{
+    const authorData = await authors.authorsByGenre("           ");
+    console.error("authorsByGenre failed to error");
+    console.error(authorData);
+    f++;
+}catch(e){
+    console.log("authorsByGenre passed test");
+    s++;
+}
+
+
+
+try{
+    const bookData = await books.getBookById();
+    console.error("getBookById failed to error")
+    console.error(bookData);
+    f++;
+}catch(e){
+    console.log("getBookById passed test");
+    s++;
+}
+
+try{
+    const bookList = await books.booksByPublisher({});
+    console.error("booksByPublisher failed to error");
+    console.error(bookList);
+    f++;
+}catch(e){
+    console.log("booksByPublisher passed test");
+    s++;
+}
+
+try{
+    const avgPrice = await books.averagePriceByGenre(111111111);
+    console.error("booksByPublisher failed to error")
+    console.error(avgPrice)
+    f++
+}catch(e){
+    console.log("booksByPublisher passed test")
+    s++;
+}
+
+
+if (!(f-f_c)) {console.log(`All Negative Tests Passed (${s})`)}
+else {console.log(`Passed ${s}/${s+f}`)}
