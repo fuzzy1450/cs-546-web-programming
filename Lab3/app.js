@@ -84,7 +84,7 @@ try{
 
 try{
     const bookData = await books.getBookById("4efdb199-5a0f-4410-bded-ce07990c6aa4");
-    if(bookData.title != "Glorious Technicolor") throw `Wrong book returned. Expected ${bookData.title}, got ${bookData.title}`;
+    if(bookData.title != "Glorious Technicolor") throw `Wrong book returned. Expected "Glorious Technicolor", got "${bookData.title}"`;
     //console.log (bookData);
     console.log("getBookById passed test")
 }catch(e){
