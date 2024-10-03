@@ -63,6 +63,20 @@ class AuthorData { // an object we will use to cache the data
         return new AuthorData(ret);
     }
 
+    async filterGenre(genre) {    // not case sensitive
+        let arr = this.data;
+        let ret = [];
+        for (let i in arr){
+            let author = arr[i]
+            let bookList = await books.utils.IDsToBooks(author.books);
+            let genreList = books.utils.booksToGenres(bookList).map((x)=>x.toLowerCase());
+            if (genreList.includes(genre.toLowerCase())) ret.push(author);
+        }
+
+        return new AuthorData(ret);
+    }
+
+
 
     firstMatch(field, value) {
         let arr = this.data
