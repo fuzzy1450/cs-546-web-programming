@@ -114,3 +114,14 @@ try{
     console.error("mostPopularGenre failed test")
     console.error (e);
 }
+
+try{
+    const bookList = await books.booksByPublisher("Skilith");
+    //console.dir(bookList);
+    if(bookList.length != 2) throw `Inaccurate bookList length. Expected 2, got ${bookList.length}. possibly data has been updated.`;
+    console.log("booksByPublisher passed test")
+}catch(e){
+    console.error("booksByPublisher failed test")
+    console.error (e);
+}
+

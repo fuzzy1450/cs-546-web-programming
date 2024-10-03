@@ -129,6 +129,25 @@ export const mostPopularGenre = async () => {
 
 };
 
-export const booksByPublisher = async (publisher) => {};
+export const booksByPublisher = async (publisher) => {
+    paramUtils.assertStr(publisher, "1st Argument");
+    let trimPublisher = publisher.trim().toLowerCase();
+    paramUtils.assertStr(trimPublisher, "1st Argument (trimmed)");
+
+    let books = await BookData.get();
+    let bookList = books.toArray();
+    
+    let ret = [];
+
+    for (let i in bookList) {
+        let book = bookList[i];
+        if(book.publisher.toLowerCase().trim() == trimPublisher) ret.push(book);
+    }
+
+    if (ret.length == 0) throw 'Publisher does not exist';
+
+    return ret;
+
+};
 
 export const averagePriceByGenre = async (genre) => {};
