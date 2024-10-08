@@ -12,6 +12,11 @@ export let assertWholeNumber = (v, varName) => {
     if (v%1 != 0) throw `${varName || v} must be a whole number. Found a decimal of ${v%1}`
 }
 
+export let assertNotNegativeNumber = (v, varName) => {
+    assertNum(v, varName)
+    if(v<0) throw `${varName || v} must be not be a negative number`;
+}
+
 export let assertNumArray = (v, varName) => {
     if (!Array.isArray(v)) throw `${varName || v} must be an array.`;
     if (v.length == 0) throw `${varName || v} must have at least one element.`;
@@ -40,6 +45,15 @@ export let assertEither = (v, varName, a1, a2, a1Name, a2Name) => {  // a specia
 export let assertStr = (v, varName) => { // this also does not allow empty strings
     if (typeof v !== 'string') throw `${varName || v} must be a string. Recieved type ${typeof v}`
     if (v.trim()==0) throw `${varName || v} must not be empty.` // this catches many things. most of them cant be used as keys for dicts.
+}
+
+export let validateStateCodeStr = (v, varName) => { // asserts that the var passed is a string containing a 2 letter state code.
+    assertStr(v, varName);                          // unlike assertion functions, this returns a string containing that state code in the prefered format.
+    let vFmt = v.trim().toUpperCase();
+    let stateCodes = ['AL','AK','AS','AZ','AR','CA','CO','CT','DE','DC','FM','FL','GA','GU','HI','ID','IL','IN','IA','KS','KY','LA','ME','MH','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','MP','OH','OK','OR','PW','PA','PR','RI','SC','SD','TN','TX','UT','VT','VI','VA','WA','WV','WI','WY'];
+
+    if (!stateCodes.includes(vFmt)) throw `${varName || v} must be a valid state code. got ${v}`;
+    return vFmt;
 }
   
 export let assertArray = (v, varName) => {
