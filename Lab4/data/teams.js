@@ -83,10 +83,30 @@ export const getTeamById = async (id) => {
 
   if(!res) throw `Object with id ${idTrim} not found`;
 
+  res["_id"] = res["_id"].toString();
+
   return res;
 
 };
 
-const removeTeam = async (id) => {};
+export const removeTeam = async (id) => {
+  paramUtils.assertStr(id, "1st Argument");
+  let idTrim = id.trim();
 
-const moveTeam = async (id, newCity, newState, newStadium) => {};
+  if(!ObjectId.isValid(idTrim)) throw `${id} is not a valid ObjectID`;
+
+  let team = await getTeamById(id);
+
+  let col = await teams();
+  let res = null;
+  try {
+    res = await col.deleteOne({"_id" : new ObjectId(idTrim)});
+  } catch (e) {
+    throw `Could not delete team with id ${idTrim}`; 
+  }
+
+  return `${team.name} has been successfully deleted!`;
+
+};
+
+export const moveTeam = async (id, newCity, newState, newStadium) => {};

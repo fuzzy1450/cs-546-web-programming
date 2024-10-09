@@ -24,13 +24,17 @@ import * as helpers from './helpers.js';
 const {ObjectId} = await import('mongodb');
 
 let yanks = await teams.createTeam("Yankees", "Baseball", 1980, "Washington", "NY", "Madison", 100, [{firstName:"Derek",lastName:"Jeter",position:"The Guy"}]);
-
+let id = yanks._id;
 console.log(yanks)
 
 const allTeams = await teams.getAllTeams();
 
 console.log(allTeams);
 
-let found = await teams.getTeamById("6705cadec9ec2eed57b9f8d2");
+let found = await teams.getTeamById(id);
 
 console.log(found);
+
+let kill = await teams.removeTeam(id);
+
+console.log(kill);
