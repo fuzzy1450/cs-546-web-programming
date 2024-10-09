@@ -133,7 +133,6 @@ export const moveTeam = async (id, newCity, newState, newStadium) => {
 
   let res = await col.updateOne({"_id" : new ObjectId(idTrim)}, updateInfo)
 
-  console.log(res);
   if(res.modifiedCount==0) throw `No records with id ${idTrim} found`;
 
   let updatedRecord = await getTeamById(idTrim);
