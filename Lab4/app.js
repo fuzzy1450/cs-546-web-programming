@@ -35,6 +35,11 @@ let found = await teams.getTeamById(id);
 
 console.log(found);
 
+
+let moveTeam = await teams.moveTeam(id, "Jersey?", "NJ", "Fakeium");
+
+console.log(moveTeam);
+
 let kill = await teams.removeTeam(id);
 
 console.log(kill);

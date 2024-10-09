@@ -109,4 +109,35 @@ export const removeTeam = async (id) => {
 
 };
 
-export const moveTeam = async (id, newCity, newState, newStadium) => {};
+export const moveTeam = async (id, newCity, newState, newStadium) => {
+  paramUtils.assertStr(id, "1st Argument");
+  paramUtils.assertStr(newCity, "2nd Argument");
+  paramUtils.assertStr(newState, "3rd Argument");
+  paramUtils.assertStr(newStadium, "4th Argument");
+
+  let idTrim = id.trim();
+  let newCityTrim = newCity.trim();
+  let newStateFmt = paramUtils.validateStateCodeStr(newState, "3rd Argument")
+  let newStadiumTrim = newStadium.trim();
+
+
+  if(!ObjectId.isValid(idTrim)) throw `${id} is not a valid ObjectID`;
+
+  let team = await getTeamById(id);
+
+  let updateInfo = {
+    $set: {city: newCityTrim, state: newStateFmt, stadium: newStadiumTrim}
+  };
+
+  let col = await teams();
+
+  let res = await col.updateOne({"_id" : new ObjectId(idTrim)}, updateInfo)
+
+  console.log(res);
+  if(res.modifiedCount==0) throw `No records with id ${idTrim} found`;
+
+  let updatedRecord = await getTeamById(idTrim);
+
+  return updatedRecord;
+
+};
