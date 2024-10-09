@@ -17,3 +17,20 @@ Try to rename a team passing in invalid data to make sure it throws errors.
 Try getting a team by ID that does not exist to make sure it throws errors.
 
 */
+
+import * as teams from './data/teams.js';
+import * as helpers from './helpers.js';
+
+const {ObjectId} = await import('mongodb');
+
+let yanks = await teams.createTeam("Yankees", "Baseball", 1980, "Washington", "NY", "Madison", 100, [{firstName:"Derek",lastName:"Jeter",position:"The Guy"}]);
+
+console.log(yanks)
+
+const allTeams = await teams.getAllTeams();
+
+console.log(allTeams);
+
+let found = await teams.getTeamById("6705cadec9ec2eed57b9f8d2");
+
+console.log(found);
