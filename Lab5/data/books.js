@@ -91,6 +91,10 @@ export const utils = { // etc. utilities
     }
 }
 
+export const getBooks = async () => {
+    return (await BookData.get()).toArray();
+};
+
 export const getBookById = async (id) => {
     paramUtils.assertStr(id, "Book ID");
     let trimId = id.trim();
@@ -104,87 +108,3 @@ export const getBookById = async (id) => {
     }
 };
 
-export const booksByFormat = async () => {
-    let books = await BookData.get();
-    let bookList = books.toArray();
-    let formatDict = {};
-    for (let i in bookList) {
-        let book = bookList[i];
-        let formatList = book.format;
-        for (let j in formatList) {
-            let fmt = formatList[j]
-            if(formatDict[fmt]) {formatDict[fmt]++}
-            else {formatDict[fmt] = 1};
-        }
-    }
-    return formatDict;
-
-};
-
-export const mostPopularGenre = async () => {
-    let books = await BookData.get();
-    let bookList = books.toArray();
-    let genreDict = {};
-
-    for (let i in bookList) {
-        let book = bookList[i];
-        let genreList = book.genres;
-        for (let j in genreList) {
-            let genre = genreList[j]
-            if(genreDict[genre]) {genreDict[genre]++}
-            else {genreDict[genre] = 1};
-        }
-    }
-
-    let s = []
-    let m = 0;
-
-    for (let genre in genreDict) {
-        if(genreDict[genre] > m) {
-            s = [genre];
-            m = genreDict[genre];
-        } else if (genreDict[genre] == m) {
-            s.push(genre);
-        }
-    }
-    let alphaCmp = (a, b) => a.localeCompare(b);
-
-    s.sort(alphaCmp);
-    if(s.length == 1) return s[0];
-    return s;
-
-};
-
-export const booksByPublisher = async (publisher) => {
-    paramUtils.assertStr(publisher, "1st Argument");
-    let trimPublisher = publisher.trim().toLowerCase();
-    paramUtils.assertStr(trimPublisher, "1st Argument (trimmed)");
-
-    let books = await BookData.get();
-    let bookList = books.toArray();
-    
-    let ret = [];
-
-    for (let i in bookList) {
-        let book = bookList[i];
-        if(book.publisher.toLowerCase().trim() == trimPublisher) ret.push(book);
-    }
-
-    if (ret.length == 0) throw 'Publisher does not exist';
-
-    return ret;
-
-};
-
-export const averagePriceByGenre = async (genre) => {
-    paramUtils.assertStr(genre, "1st Argument");
-    let trimGenre = genre.trim().toLowerCase();
-    paramUtils.assertStr(trimGenre, "1st Argument (trimmed)");
-
-    let books = (await BookData.get()).filterGenre(trimGenre);
-    let avgPrice = books.calculateAveragePrice();
-
-    let rounded = parseInt(avgPrice * 100)/100;
-
-    return rounded;
-};
