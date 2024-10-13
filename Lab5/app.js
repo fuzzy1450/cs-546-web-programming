@@ -10,7 +10,7 @@ Lab Requirements:
 -DO NOT ADD ANY OTHER FILE OR FOLDER APART FROM PACKAGE.JSON (OR package-lock.json) FILE.
 */
 import express from 'express';
-import routeSetter from './routes/index.js'
+import {routeSetter} from './routes/index.js'
 const app = express();
 
 
