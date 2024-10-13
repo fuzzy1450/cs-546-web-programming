@@ -131,6 +131,9 @@ export const utils = { // etc. utilities
     }
 }
 
+export const getAuthors = async () => {
+    return (await AuthorData.get()).toArray();
+}
 
 export const getAuthorById = async (id) => {
     paramUtils.assertStr(id, "Author ID");
@@ -142,70 +145,5 @@ export const getAuthorById = async (id) => {
     } catch (e) {
         throw 'author not found'
     }
-};
-
-export const authorsMultipleGenres = async () => {
-    let r = []
-    let authors = (await AuthorData.get()).toArray().sort(lastNameCompare);
-    for (let i in authors) {
-        let author = authors[i];
-        
-        let bookList = await books.utils.IDsToBooks(author.books)
-
-        
-        let authorGenres = books.utils.booksToGenres(bookList)
-        if (authorGenres.length > 1) r.push(`${author.first_name} ${author.last_name}`);
-    }
-    return r;
-};
-
-export const averagePageCount = async (firstName, lastName) => {
-    paramUtils.assertStr(firstName, "First Name");
-    paramUtils.assertStr(lastName, "Last Name");
-    let trimFirst = firstName.trim();
-    let trimLast = lastName.trim()
-    paramUtils.assertStr(trimFirst, "First Name (trimmed)");
-    paramUtils.assertStr(trimLast, "Last Name (trimmed)");
-
-    let author = await utils.namesToAuthor(trimFirst, trimLast);
-
-    if (!author) throw 'Author Not Found';
-    
-    let bookList = await books.utils.IDsToBooks(author.books);
-    let sum = 0;
-    let n = 0;
-    for (let i in bookList) {
-        sum+= bookList[i].pageCount;
-        n++;
-    }
-    return (n ? sum/n : 0); // if there are no books (n=0) then we cant divide sum by n.
-
-};
-
-export const getAuthorsByAgeRange = async (minAge, maxAge) => {
-    paramUtils.assertWholeNumber(minAge, "1st Argument");
-    paramUtils.assertWholeNumber(maxAge, "2nd Argument");
-    if (minAge < 1) throw `1st Argument must be greater than or equal to 1`;
-    if (minAge >= maxAge) throw `minAge cannot be greater or equal to maxAge`;
-
-    let Authors = (await AuthorData.get()).filterAgeMin(minAge).filterAgeMax(maxAge);
-
-    let ret = Authors.toArray();
-    if (ret.length == 0) throw `No Authors found between the ages of ${minAge} and ${maxAge}`;
-
-    return ret;
-};
-
-export const authorsByGenre = async (genre) => {
-    paramUtils.assertStr(genre, "1st Argument")
-    let genreTrim = genre.trim();
-    paramUtils.assertStr(genreTrim, "1st Argument (trimmed)");
-
-    let Authors = (await (await AuthorData.get()).filterGenre(genreTrim)).toArray();
-    
-    if (Authors.length == 0) throw 'Genre does not exist in dataset';
-
-    return Authors;
-
 };
 
