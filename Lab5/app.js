@@ -21,3 +21,5 @@ routeSetter(app);
 app.listen(3000, () => {
     console.log("Server listening on http://localhost:3000");
 })
+
+// this was the easiest lab so far, only took me an hour and a half
