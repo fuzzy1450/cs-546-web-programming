@@ -2,10 +2,13 @@
 to get the authors, books, getAuthorByID, getBookById.  You will import these functions into your routing files and call the relevant function depending on the route. 
 */
 
-const getAuthors = async () => {};
+import * as books from "./books.js";
+import * as authors from "./authors.js";
 
-const getBooks = async () => {};
+export const getAuthors = authors.getAuthors;
 
-const getAuthorById = async (id) => {};
+export const getBooks = books.getBooks;
 
-const getBookById = async (id) => {};
+export const getAuthorById = authors.getAuthorById;
+
+export const getBookById = books.getBookById;
