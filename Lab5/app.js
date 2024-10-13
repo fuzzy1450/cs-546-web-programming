@@ -23,3 +23,6 @@ app.listen(3000, () => {
 })
 
 // this was the easiest lab so far, only took me an hour and a half
+// i just re-read the instructions and saw the line
+//      -DO NOT ADD ANY OTHER FILE OR FOLDER APART FROM PACKAGE.JSON (OR package-lock.json) FILE.
+// i guess ill refactor stuff to meet that requirement
