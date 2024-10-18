@@ -182,6 +182,9 @@ export const averagePriceByGenre = async (genre) => {
     paramUtils.assertStr(trimGenre, "1st Argument (trimmed)");
 
     let books = (await BookData.get()).filterGenre(trimGenre);
+
+    if (books.toArray().length == 0) throw 'Genre does not exist in dataset';
+
     let avgPrice = books.calculateAveragePrice();
 
     let rounded = parseInt(avgPrice * 100)/100;
