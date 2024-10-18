@@ -234,11 +234,21 @@ try{
 
 try{
     const avgPrice = await books.averagePriceByGenre(111111111);
-    console.error("booksByPublisher failed to error")
+    console.error("averagePriceByGenre failed to error")
     console.error(avgPrice)
     f++
 }catch(e){
-    console.log("booksByPublisher passed test")
+    console.log("averagePriceByGenre passed test")
+    s++;
+}
+
+try{
+    const avgPrice = await books.averagePriceByGenre(" fake af genre ");
+    console.error("averagePriceByGenre failed to error")
+    console.error(avgPrice)
+    f++
+}catch(e){
+    console.log("averagePriceByGenre passed test")
     s++;
 }
 
