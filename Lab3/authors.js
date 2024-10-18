@@ -3,7 +3,21 @@ import * as paramUtils from './paramUtils.js';
 import * as books from "./books.js";
 
 
-let lastNameCompare = (a, b) => a.last_name.localeCompare(b.last_name);
+let stripNameStr = (s) => {
+    const letters = "abcdefghijklmnopqrstuvwxyz "
+    let newStr = ""
+    for (let i in s) {
+        if(letters.includes(s[i])) newStr+=s[i];
+    }
+    return newStr;
+}
+
+let lastNameCompare = (a, b) => {
+    let n1 = stripNameStr(a.last_name.toLowerCase());
+    let n2 = stripNameStr(b.last_name.toLowerCase());
+    return n1.localeCompare(n2);
+}
+
 
 class AuthorData { // an object we will use to cache the data
     static loaded = null;
@@ -178,7 +192,7 @@ export const averagePageCount = async (firstName, lastName) => {
         sum+= bookList[i].pageCount;
         n++;
     }
-    return (n ? sum/n : 0); // if there are no books (n=0) then we cant divide sum by n.
+    return (n ? (sum/n).toFixed(2) : 0); // if there are no books (n=0) then we cant divide sum by n.
 
 };
 
@@ -201,11 +215,14 @@ export const authorsByGenre = async (genre) => {
     let genreTrim = genre.trim();
     paramUtils.assertStr(genreTrim, "1st Argument (trimmed)");
 
-    let Authors = (await (await AuthorData.get()).filterGenre(genreTrim)).toArray();
+    let Authors = (await (await AuthorData.get()).filterGenre(genreTrim)).toArray().sort(lastNameCompare);
     
     if (Authors.length == 0) throw 'Genre does not exist in dataset';
 
-    return Authors;
+    let r = [];
+    for (let i in Authors) r.push(`${Authors[i].first_name} ${Authors[i].last_name}`);
+    return r;
+
 
 };
 
