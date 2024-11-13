@@ -15,14 +15,21 @@ app.use("/public", staticDir);
 
 const handlebars = exphbs.create({
 	defaultLayout: "main",
-	layoutsDir: _dirname + "./views/layouts",
-	partialsDir: _dirname + "./views/partials",
+	layoutsDir: _dirname + "/views/layouts",
+	partialsDir: _dirname + "/views/partials",
+	helpers: {
+		strEq: (s1, s2) => {
+			return s1 == s2
+		}
+	}
+
 });
 
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 
 app.use(express.json());
+app.use(express.urlencoded())
 
 routeSetter(app);
 
