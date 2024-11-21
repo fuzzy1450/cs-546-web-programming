@@ -1,3 +1,96 @@
-/*
-You will style your page using at least 10 CSS selectors for general CSS styling. You will place the CSS in its own file. 
-*/
+html {
+    width: 100%;
+    height: 100%;
+    background-color: #070707;
+}
+
+body {
+    width: 75%;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #094b008e;
+}
+
+header {
+    background-color: #ffffff8e;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 3px;
+    width:425px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 5px;
+}
+h3 {
+    margin-top: 5px;
+}
+
+main {
+    height:250px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 3px;
+}
+
+form {
+    background-color: #ffffff8e;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+input {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#results {
+    overflow-y: scroll;
+    height:500px;
+    width:75%;
+    background-color: #0707078e;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 3px;
+}
+
+.is-prime {
+    color: #00ff00;
+}
+
+.not-prime {
+    color: #ff0000;
+}
+
+footer {
+    background-color: #ffffff8e;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 3px;
+    width: 75%;
+}
+
+footer ul {
+    display:flex;
+    list-style: none;
+    justify-content: space-around;
+    height: 100%;
+    margin-top: 0px;
+    padding:0px
+}
+footer ul li {
+    height:100%;
+    width:20%;
+    border-style: solid;
+    border-width: 0 3px 0 3px;
+    text-align: center;
+}

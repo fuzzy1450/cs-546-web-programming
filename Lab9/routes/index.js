@@ -1,1 +1,9 @@
-//Here you will require route files and export them as used in previous labs.
+import { router as fibRoutes } from "./fibonacci_prime.js";
+
+export const routeSetter = (app) => {
+	app.use("/", fibRoutes);
+
+	app.use("*", (req, res) => {
+		res.status(404).send("Route Not Found!");
+	});
+};

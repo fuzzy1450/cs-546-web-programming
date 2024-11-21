@@ -1,4 +1,20 @@
-/*
-Here is where you'll set up your server as shown in lecture code and worked in previous labs.
-Your server this week should not do any of the processing or calculations.  Your server only exists to allow someone to get to the HTML Page and download the associated assets to run the Fibonacci & prime number checking page.
-*/
+import express from "express";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+import { routeSetter } from "./routes/index.js";
+
+const app = express();
+
+const _dirname = dirname(fileURLToPath(import.meta.url));
+
+const staticDir = express.static(_dirname + "/public");
+app.use("/public", staticDir);
+
+
+
+routeSetter(app);
+
+app.listen(3000, () => {
+	console.log("Server listening on http://localhost:3000");
+});
