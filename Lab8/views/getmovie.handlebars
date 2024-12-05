@@ -1,0 +1,55 @@
+
+    <main>
+        <article id="InfoPanel">
+            <h1 id="Title">{{movie.Title}}</h1>
+            {{#if (strEq movie.Poster "N/A")}}
+                <img alt="No Poster Avaliable" src="/public/img/no_image.jpeg">
+            {{else}}
+                <img alt="{{movie.Title}} Poster" src="{{movie.Poster}}">
+            {{/if}}
+            <h2 id="PlotTitle">Plot</h2>
+            <p id="plotText">{{movie.Plot}}</p>
+
+            <section class="panel">
+                <h3>Info</h3>
+                <dl>
+                    <dt>Year Released:</dt>
+                    <dd>{{movie.Year}}</dd>
+                    <dt>Rated:</dt>
+                    <dd>{{movie.Rated}}</dd>
+                    <dt>Runtime:</dt>
+                    <dd>{{movie.Runtime}}</dd>
+                    <dt>Genre(s):</dt>
+                    <dd>{{movie.Genre}}</dd>
+                    <dt>Box Office Earnings:</dt>
+                    <dd>{{movie.BoxOffice}}</dd>
+                    <dt>DVD Release Date:</dt>
+                    <dd>{{movie.DVD}}</dd>
+                </dl>
+            </section>
+
+            <section class="panel">
+                <h4>Cast and Crew</h4>
+                <p><strong>Director:</strong> {{movie.Director}}</p>
+                <p><strong>Writer:</strong> {{movie.Writer}}</p>
+                <p><strong>Cast:</strong> {{movie.Actors}}</p>
+            </section>
+
+            <section class="panel">
+                <h4>Ratings</h4>
+                <table class="my_coolratings_table">
+                    <tr>
+                        <th>Source</th>
+                        <th>Rating</th>
+                    </tr>
+                    {{#each movie.Ratings}}
+                    <tr>
+                        <td>{{this.Source}}</td>
+                        <td>{{this.Value}}</td>
+                    </tr>
+                    {{/each}}
+                </table>
+            </section>
+        </article>
+    </main>
+

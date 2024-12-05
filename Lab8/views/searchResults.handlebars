@@ -1,0 +1,29 @@
+{{!
+
+    You should have a main element, and inside of the main element have a ol tag that has a list of up to 50 movies
+    matching the searchByTitle found in the request body in the following format (after searching Breakfast). DO NOT
+    SHOW MORE THAN 50 Movies. Each list item will show the image of the movie, and the movie title, it should link to
+    your /getmovie/:id route. One of your CSS rules, should scale the image from the data so it is just a thumbnail.
+    Otherwise, the image will be huge! You will lose points if you make it that huge. I found a good width is 75px and a
+    good height is 117px. DO NOT FORGET TO ADD THE ALT ATTRIBUTE TO the Image. Set it to be "[movie name] Poster" as
+    shown below. (in the example below, I am just showing 3 of the 50 results, make sure you show up to 50 results!
+}}
+
+<main>
+    <ol id="ResultDisplay">
+        {{#each movies}}
+         <li class="searchResult">
+            <a href="/getMovie/{{this.imdbID}}">
+                <h1>{{this.Title}}</h1>
+                {{#if (strEq this.Poster "N/A")}}
+                    <img alt="No Poster Avaliable" src="/public/img/no_image.jpeg">
+                {{else}}
+                    <img alt="{{this.Title}} Poster" src="{{this.Poster}}">
+                {{/if}}
+            </a>
+        </li>
+        {{/each}}
+    </ol>
+</main>
+
+
