@@ -1,0 +1,19 @@
+{
+  "name": "cs-546-lab-10",
+  "version": "1.0.0",
+  "description": "The 10th lab for CS546 (24F)",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Evan Kupsch 10428138",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.1",
+    "express-handlebars": "^8.0.1",
+    "express-session": "^1.18.1",
+    "mongodb": "^6.10.0"
+  }
+}
