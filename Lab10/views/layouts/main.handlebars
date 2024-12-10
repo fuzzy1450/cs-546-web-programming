@@ -2,6 +2,19 @@
 {{! Refer lecture code to learn more on how this works
 don't forget to include your css and your client-side script file references in the layout.
 for the theme, you can simply read the themePreference for the user and inject it into the body element
-{{!
+!}}
 
-<body class="{{themePreference}}">
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{PageTitle}}</title>
+        <link rel="stylesheet" href="/public/css/sitestyles.css">
+    </head>
+    <body style="{{themePreference}}">
+
+        {{{body}}}
+
+        <p id="local_error_display" style="display:none" class="error"></p>
+        <script src="/public/js/form_validate.js"></script>
+    </body>
+</html>

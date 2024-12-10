@@ -1,4 +1,53 @@
-/* Styling
-You will create a CSS stylesheet in /public/css/sitestyles.css; this file should have at least 5 rulesets.  You will need to utilize all 5 rulesets on each of the pages (not every page has to use all 5 rulesets each but all 5 rulesets must be utilized by the various pages in your application).  So you can have some rulesets for one page, some for another page but there needs to be at least 5 total rulesets that are used between all the pages.   Depending of the user's theme preferences stored in the session, your pages will be displayed using the user's theme preferences. The background of the page should be the background color preference they selected when they signed up, and the font color will be the font color they selected when they signed up. ALL pages must have the theme applied when a user is logged in. 
+html {
+    width: 100%;
+    height: 100%
+}
 
-*/
+body{
+    width: 100%;
+    height: 100%
+}
+
+#welcome {
+    font-size: larger
+}
+
+#quote {
+    font-size: smaller;
+}
+
+
+#adminLink {
+    margin-left: 25px;
+    margin-right: 50px;
+}
+
+#userLink {
+    margin-left: 25px;
+    margin-right: 50px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 66%;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+form label {
+    margin-top: 15px;
+}
+#submit_button {
+    margin-top: 15px;
+}
+
+a p {
+    width: 350px;
+    margin-left:15px
+}
+
+.error {
+    margin-left:15px;
+    color: rgb(172, 0, 0)
+}

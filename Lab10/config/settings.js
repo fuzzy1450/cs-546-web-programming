@@ -2,5 +2,5 @@
 
 export const mongoConfig = {
   serverUrl: 'mongodb://localhost:27017/',
-  database: ''
+  database: 'Evan_Kupsch_lab10'
 };
